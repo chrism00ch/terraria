@@ -19,6 +19,42 @@ jobs:
     steps:
       - checkout
       - setup_remote_docker
+      - extend-env
       - run:
           name: Build Image
-          command: docker build -t terarria-server .
+          command: docker build -t $BUILD_TAG .
+      - push
+commands:
+  extend-env:
+    steps:
+      - run:
+          name: "Extend environment"
+          command: |
+            # SHA1 of the repository tree for the current commit
+            # https://git-scm.com/book/en/v2/Git-Internals-Git-Objects#_tree_objects
+            echo "export GIT_TREE_SHA1=\"$(git show -s --format=%T | cut -d' ' -f2)\"" | tee -a $BASH_ENV
+
+            # Default build tag
+            echo 'export BUILD_TAG="$GIT_TREE_SHA1"' | tee -a $BASH_ENV
+
+            # Base URL for docker repo
+            echo 'export GCR_BASE="gcr.io/$GC_PROJECT_ID/terraria"' | tee -a $BASH_ENV
+  auth-gcloud:
+    steps:
+      - run:
+          name: "Authenticate to Google Cloud"
+          command: |
+            export KEY_PATH="$HOME/gcp-key.json"
+            echo ${GC_SERVICE_ACCT_KEY} \
+              | base64 --decode > ${KEY_PATH}
+
+            gcloud auth activate-service-account ${ACCOUNT} --keyfile=${KEY_PATH}
+            gcloud auth configure-docker
+  push:
+    steps:
+      - run:
+          name: "Push to GCR"
+          command: |
+            export PUBLISH_TAG="$GCR_BASE:latest"
+            docker tag $BUILD_TAG $PUBLISH_TAG
+            docker push $PUBLISH_TAG
