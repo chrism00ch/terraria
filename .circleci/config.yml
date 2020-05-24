@@ -48,7 +48,7 @@ commands:
             echo ${GC_SERVICE_ACCT_KEY} \
               | base64 --decode > ${KEY_PATH}
 
-            gcloud auth activate-service-account ${ACCOUNT} --keyfile=${KEY_PATH}
+            gcloud auth activate-service-account ${ACCOUNT} --key-file=${KEY_PATH}
             gcloud auth configure-docker
   push:
     steps:
