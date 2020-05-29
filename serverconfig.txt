@@ -6,6 +6,6 @@ banlist=/app/Worlds/banlist.txt
 password=
 maxplayers=10
 difficulty=2
-autocreate=3
+autocreate=333
 language=en/US
 npcstream=10
