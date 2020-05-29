@@ -6,7 +6,7 @@ CMD="./TerrariaServer -x64 -config /app/Worlds/serverconfig.txt"
 
 # Create default config files if they don't exist
 if [ ! -f "/app/Worlds/serverconfig.txt" ]; then
-    exec ./conf.sh -i
+    exec ./conf.sh
     #exit 1
 fi
 

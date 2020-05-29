@@ -89,7 +89,7 @@ else
 fi
 
 # Generate serverconfig.xml
-tee << EOF > /app/Worlds/serverconfig.txt
+tee << EOF > ./serverconfig.txt
 worldpath=$WorldPath
 worldname=$World
 world=$WorldPath/$World.wld

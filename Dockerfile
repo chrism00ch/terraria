@@ -26,8 +26,7 @@ ENV VANILLA_VERSION=1404 \
 # fix for favorites.json error
 RUN favorites_path="/app/Worlds" && mkdir -p "$favorites_path" && echo "{}" > "$favorites_path/favorites.json"
 
-COPY ./conf.sh /app/conf.sh
-COPY ./server.sh /app/server.sh
+COPY ./serverconfig.txt /app/serverconfig.txt
 
 # Set up Enviornment
 RUN \
@@ -37,15 +36,13 @@ RUN \
     rm -R /tmp/* && \
     useradd --home /app --gid root --system Terraria && \
     chown Terraria:root -R /app && \
-    chmod +x /app/conf.sh && \
-    chmod +x /app/server.sh && \
     chmod +x /app/TerrariaServer*
 
 USER Terraria
 
 WORKDIR /app
 
-CMD ["/bin/bash"]
+CMD ./TerrariaServer -x64 -config /app/serverconfig.txt
 
 ONBUILD USER root
 

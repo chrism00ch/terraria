@@ -1,0 +1,11 @@
+worldpath=/app/Worlds
+worldname=DuckFat1
+world=/app/Worlds/MyWorld.wld
+port=
+banlist=/app/Worlds/banlist.txt
+password=
+maxplayers=10
+difficulty=2
+autocreate=3
+language=en/US
+npcstream=10
