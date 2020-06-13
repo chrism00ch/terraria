@@ -20,7 +20,7 @@ ENV LANG=en_US.UTF-8 \
     LC_ALL=en_US.UTF-8
 
 ENV VANILLA_VERSION=1405 \
-    ARCHIVE_VERSION=038 \
+    ARCHIVE_VERSION=039 \
     PORT=7777
 
 # fix for favorites.json error
